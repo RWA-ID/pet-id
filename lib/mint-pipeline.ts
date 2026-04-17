@@ -49,18 +49,12 @@ export async function mintPetPage(petId: string) {
     await log(petId, "ipfs_uploaded", { pageCid });
 
     // Register ENS subdomain on-chain
-    const registrarAddress = (
-      pet.parent_domain === "dogid.eth"
-        ? process.env.DOGID_REGISTRAR_ADDRESS
-        : process.env.CATID_REGISTRAR_ADDRESS
-    ) as `0x${string}`;
-
     const adminWalletAddress = (await import("viem/accounts")).privateKeyToAccount(
       process.env.ADMIN_WALLET_PRIVATE_KEY as `0x${string}`
     ).address;
 
     const txHash = await adminRegisterOnChain(
-      registrarAddress,
+      pet.parent_domain,
       pet.subdomain,
       adminWalletAddress,
       contenthash as `0x${string}`

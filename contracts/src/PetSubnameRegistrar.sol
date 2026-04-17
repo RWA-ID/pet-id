@@ -5,7 +5,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 interface INameWrapper {
-    // Used to mint wrapped subnames
     function setSubnodeRecord(
         bytes32 parentNode,
         string calldata label,
@@ -16,10 +15,7 @@ interface INameWrapper {
         uint64 expiry
     ) external returns (bytes32 node);
 
-    // Check if a subname is already minted
     function ownerOf(uint256 id) external view returns (address);
-
-    // Check that this contract is approved to act on parent owner's behalf
     function isApprovedForAll(address owner, address operator) external view returns (bool);
 }
 
@@ -32,11 +28,8 @@ interface IPublicResolver {
     function setAddr(bytes32 node, address addr) external;
 }
 
-// NameWrapper fuse constants
-// Burning PARENT_CANNOT_CONTROL means the parent can never revoke the subname —
-// the holder gets true permanent ownership as an NFT in the NameWrapper.
+uint32 constant CANNOT_UNWRAP         = 1;
 uint32 constant PARENT_CANNOT_CONTROL = 1 << 17;
-uint32 constant CANNOT_UNWRAP         = 1;    // required before PARENT_CANNOT_CONTROL
 
 contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
 
@@ -44,19 +37,24 @@ contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
     INameWrapper    public immutable nameWrapper;
     IENSRegistry    public immutable ensRegistry;
     IPublicResolver public immutable resolver;
-    bytes32         public immutable parentNode;
 
     // ── State ─────────────────────────────────────────────────────
     uint256 public registrationFee = 0.005 ether;
 
-    // ── Events ───────────────────────────────────────────────────
+    // Supported parent nodes (dogid.eth, catid.eth, petid.eth, etc.)
+    mapping(bytes32 => bool) public supportedParents;
+    bytes32[] public parentList;
+
+    // ── Events ────────────────────────────────────────────────────
     event SubnameRegistered(
+        bytes32 indexed parentNode,
         string  label,
         bytes32 indexed subnameNode,
         address indexed owner,
-        bytes   contenthash,
         bool    permanent
     );
+    event ParentAdded(bytes32 indexed node, string label);
+    event ParentRemoved(bytes32 indexed node);
     event FeeUpdated(uint256 newFee);
     event Withdrawn(address to, uint256 amount);
 
@@ -64,114 +62,142 @@ contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
     constructor(
         address _nameWrapper,
         address _ensRegistry,
-        address _resolver,
-        bytes32 _parentNode
+        address _resolver
     ) Ownable(msg.sender) {
         nameWrapper  = INameWrapper(_nameWrapper);
         ensRegistry  = IENSRegistry(_ensRegistry);
         resolver     = IPublicResolver(_resolver);
-        parentNode   = _parentNode;
+    }
+
+    // ── Admin: manage supported parents ──────────────────────────
+
+    function addParent(bytes32 node, string calldata label) external onlyOwner {
+        require(!supportedParents[node], "Already supported");
+        supportedParents[node] = true;
+        parentList.push(node);
+        emit ParentAdded(node, label);
+    }
+
+    function removeParent(bytes32 node) external onlyOwner {
+        require(supportedParents[node], "Not supported");
+        supportedParents[node] = false;
+        emit ParentRemoved(node);
+    }
+
+    function getParentList() external view returns (bytes32[] memory) {
+        return parentList;
     }
 
     // ── Crypto-native flow ────────────────────────────────────────
 
     /**
-     * @notice Register a subname for a crypto-native user.
-     *         Burns PARENT_CANNOT_CONTROL + CANNOT_UNWRAP so the user
-     *         gets a fully permanent, irrevocable wrapped ENS name (ERC-1155 NFT).
-     * @param label       e.g. "max" → max.dogid.eth
-     * @param contenthash IPFS contenthash bytes (optional — can be set later via resolver)
+     * @notice Register a subname as a crypto-native user.
+     *         Burns PARENT_CANNOT_CONTROL — permanent, irrevocable ownership.
+     * @param parentNode  namehash of dogid.eth or catid.eth
+     * @param label       e.g. "max"
+     * @param contenthash IPFS contenthash bytes (optional)
      */
     function register(
+        bytes32 parentNode,
         string calldata label,
         bytes calldata contenthash
     ) external payable nonReentrant {
+        require(supportedParents[parentNode], "Unsupported parent");
         require(msg.value >= registrationFee, "Insufficient fee");
 
         bytes32 subnameNode = _mintSubname(
+            parentNode,
             label,
             msg.sender,
             contenthash,
-            CANNOT_UNWRAP | PARENT_CANNOT_CONTROL, // permanent ownership
-            type(uint64).max                        // never expires
+            CANNOT_UNWRAP | PARENT_CANNOT_CONTROL,
+            type(uint64).max
         );
 
-        // Refund overpayment
         uint256 excess = msg.value - registrationFee;
         if (excess > 0) {
             (bool ok,) = msg.sender.call{value: excess}("");
             require(ok, "Refund failed");
         }
 
-        emit SubnameRegistered(label, subnameNode, msg.sender, contenthash, true);
+        emit SubnameRegistered(parentNode, label, subnameNode, msg.sender, true);
     }
 
     // ── Admin / normie (fiat) flow ────────────────────────────────
 
     /**
-     * @notice Admin-only registration for normie fiat flow.
-     *         Subname is owned by admin wallet (custodial).
-     *         No fuses burned — admin can update contenthash and transfer later.
-     * @param label         Subdomain label
-     * @param custodialOwner Admin wallet or any address (custodial)
-     * @param contenthash   IPFS contenthash
+     * @notice Admin-only registration for fiat flow.
+     *         No fuses burned — admin can update contenthash and transfer to user later.
+     * @param parentNode     namehash of dogid.eth or catid.eth
+     * @param label          Subdomain label
+     * @param custodialOwner Admin wallet (custodial until user claims)
+     * @param contenthash    IPFS contenthash
      */
     function adminRegister(
+        bytes32 parentNode,
         string calldata label,
         address custodialOwner,
         bytes calldata contenthash
     ) external onlyOwner nonReentrant {
+        require(supportedParents[parentNode], "Unsupported parent");
+
         bytes32 subnameNode = _mintSubname(
+            parentNode,
             label,
             custodialOwner,
             contenthash,
-            0,              // no fuses — admin can manage/transfer to user later
+            0,
             type(uint64).max
         );
-        emit SubnameRegistered(label, subnameNode, custodialOwner, contenthash, false);
+
+        emit SubnameRegistered(parentNode, label, subnameNode, custodialOwner, false);
     }
 
     function adminRegisterBatch(
+        bytes32[]  calldata parentNodes,
         string[]   calldata labels,
         address[]  calldata owners,
         bytes[]    calldata contenthashes
     ) external onlyOwner nonReentrant {
         require(
-            labels.length == owners.length && labels.length == contenthashes.length,
+            parentNodes.length == labels.length &&
+            labels.length == owners.length &&
+            labels.length == contenthashes.length,
             "Length mismatch"
         );
         for (uint256 i = 0; i < labels.length; i++) {
-            bytes32 subnameNode = _mintSubname(labels[i], owners[i], contenthashes[i], 0, type(uint64).max);
-            emit SubnameRegistered(labels[i], subnameNode, owners[i], contenthashes[i], false);
+            require(supportedParents[parentNodes[i]], "Unsupported parent");
+            bytes32 subnameNode = _mintSubname(
+                parentNodes[i], labels[i], owners[i], contenthashes[i], 0, type(uint64).max
+            );
+            emit SubnameRegistered(parentNodes[i], labels[i], subnameNode, owners[i], false);
         }
     }
 
     // ── Views ─────────────────────────────────────────────────────
 
-    function isAvailable(string calldata label) external view returns (bool) {
-        bytes32 subnameNode = _makeNode(label);
+    function isAvailable(bytes32 parentNode, string calldata label) external view returns (bool) {
+        bytes32 subnameNode = _makeNode(parentNode, label);
         try nameWrapper.ownerOf(uint256(subnameNode)) returns (address owner) {
             return owner == address(0);
         } catch {
-            return true; // ownerOf reverts for non-existent tokens
+            return true;
         }
     }
 
-    // ── Update contenthash (admin-owned subnames only) ────────────
-
-    /**
-     * @notice Update the IPFS contenthash for a custodially-owned subname.
-     *         Only works while the admin wallet still holds the NameWrapper token
-     *         (i.e. before the user claims ownership).
-     */
-    function updateContenthash(string calldata label, bytes calldata contenthash) external onlyOwner {
-        bytes32 subnameNode = _makeNode(label);
+    function updateContenthash(
+        bytes32 parentNode,
+        string calldata label,
+        bytes calldata contenthash
+    ) external onlyOwner {
+        bytes32 subnameNode = _makeNode(parentNode, label);
         resolver.setContenthash(subnameNode, contenthash);
     }
 
     // ── Internal ─────────────────────────────────────────────────
 
     function _mintSubname(
+        bytes32 parentNode,
         string calldata label,
         address owner,
         bytes calldata contenthash,
@@ -182,37 +208,27 @@ contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
         require(bytes(label).length <= 42, "Label too long");
         _validateLabel(label);
 
-        // Availability check (reverts if already minted)
-        bytes32 node = _makeNode(label);
+        bytes32 node = _makeNode(parentNode, label);
         try nameWrapper.ownerOf(uint256(node)) returns (address existing) {
             require(existing == address(0), "Already registered");
-        } catch {} // revert = available
+        } catch {}
 
-        // Verify this contract is approved as NameWrapper operator for the parent owner
         address parentOwner = ensRegistry.owner(parentNode);
         require(
             nameWrapper.isApprovedForAll(parentOwner, address(this)),
             "Registrar not approved on NameWrapper"
         );
 
-        // Mint wrapped subname via NameWrapper
         subnameNode = nameWrapper.setSubnodeRecord(
-            parentNode,
-            label,
-            owner,
-            address(resolver),
-            0,      // TTL
-            fuses,
-            expiry
+            parentNode, label, owner, address(resolver), 0, fuses, expiry
         );
 
-        // Set contenthash via resolver if provided
         if (contenthash.length > 0) {
             resolver.setContenthash(subnameNode, contenthash);
         }
     }
 
-    function _makeNode(string calldata label) internal view returns (bytes32) {
+    function _makeNode(bytes32 parentNode, string calldata label) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked(parentNode, keccak256(bytes(label))));
     }
 

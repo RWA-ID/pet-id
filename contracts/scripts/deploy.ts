@@ -9,28 +9,31 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying with:", deployer.address);
 
+  // Deploy single registrar for all parent domains
+  const Registrar = await ethers.deployContract("PetSubnameRegistrar", [
+    NAME_WRAPPER, ENS_REGISTRY, PUBLIC_RESOLVER,
+  ]);
+  await Registrar.waitForDeployment();
+  const registrarAddr = await Registrar.getAddress();
+  console.log("PetSubnameRegistrar deployed to:", registrarAddr);
+
+  // Register both parent domains
   const dogNode = namehash("dogid.eth");
-  const DogRegistrar = await ethers.deployContract("PetSubnameRegistrar", [
-    NAME_WRAPPER, ENS_REGISTRY, PUBLIC_RESOLVER, dogNode,
-  ]);
-  await DogRegistrar.waitForDeployment();
-  const dogAddr = await DogRegistrar.getAddress();
-  console.log("DogID Registrar:", dogAddr);
-
   const catNode = namehash("catid.eth");
-  const CatRegistrar = await ethers.deployContract("PetSubnameRegistrar", [
-    NAME_WRAPPER, ENS_REGISTRY, PUBLIC_RESOLVER, catNode,
-  ]);
-  await CatRegistrar.waitForDeployment();
-  const catAddr = await CatRegistrar.getAddress();
-  console.log("CatID Registrar:", catAddr);
 
-  console.log("\n⚠️  Post-deployment steps required:");
+  let tx = await Registrar.addParent(dogNode, "dogid.eth");
+  await tx.wait();
+  console.log("✅ Added dogid.eth");
+
+  tx = await Registrar.addParent(catNode, "catid.eth");
+  await tx.wait();
+  console.log("✅ Added catid.eth");
+
+  console.log("\n⚠️  Next steps:");
   console.log("1. Wrap dogid.eth and catid.eth via https://app.ens.domains");
-  console.log("2. Approve registrars as NameWrapper operators:");
-  console.log(`   nameWrapper.setApprovalForAll("${dogAddr}", true)  // from dogid.eth owner`);
-  console.log(`   nameWrapper.setApprovalForAll("${catAddr}", true)  // from catid.eth owner`);
-  console.log("3. Update DOGID_REGISTRAR_ADDRESS and CATID_REGISTRAR_ADDRESS in .env.local");
+  console.log("2. From each domain owner wallet, approve the registrar:");
+  console.log(`   nameWrapper.setApprovalForAll("${registrarAddr}", true)`);
+  console.log(`3. Set PETID_REGISTRAR_ADDRESS=${registrarAddr} in .env.local`);
 }
 
 main().catch(console.error);
