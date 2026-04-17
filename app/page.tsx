@@ -5,18 +5,8 @@ export default function LandingPage() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-        :root{
-          --cream:#FBF5EC;--cream-2:#F5E6D0;--cream-3:#EFDCBE;
-          --amber:#C87A2E;--amber-dark:#A35E1B;--amber-soft:#E8A962;
-          --brown:#3D2817;--brown-2:#5C3E25;--brown-3:#8A6B4E;
-          --line:#E5D3B6;--white:#FFFDF8;
-          --radius:18px;--radius-lg:28px;
-          --shadow-sm:0 1px 2px rgba(61,40,23,.06),0 2px 8px rgba(61,40,23,.04);
-          --shadow-md:0 2px 4px rgba(61,40,23,.06),0 10px 30px rgba(61,40,23,.08);
-        }
-        *{box-sizing:border-box;}
-        body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--brown);-webkit-font-smoothing:antialiased;line-height:1.5;margin:0;}
-        a{color:inherit;text-decoration:none;}
+        :root{--cream:#FBF5EC;--cream-2:#F5E6D0;--cream-3:#EFDCBE;--amber:#C87A2E;--amber-dark:#A35E1B;--amber-soft:#E8A962;--brown:#3D2817;--brown-2:#5C3E25;--brown-3:#8A6B4E;--line:#E5D3B6;--white:#FFFDF8;--radius:18px;--radius-lg:28px;--shadow-sm:0 1px 2px rgba(61,40,23,.06),0 2px 8px rgba(61,40,23,.04);--shadow-md:0 2px 4px rgba(61,40,23,.06),0 10px 30px rgba(61,40,23,.08);}
+        *{box-sizing:border-box;}body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;background:var(--cream);color:var(--brown);-webkit-font-smoothing:antialiased;line-height:1.5;margin:0;}a{color:inherit;text-decoration:none;}
         .container{width:100%;max-width:1180px;margin:0 auto;padding:0 28px;}
         .nav{position:sticky;top:0;z-index:20;background:rgba(251,245,236,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(229,211,182,.5);}
         .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
@@ -32,7 +22,7 @@ export default function LandingPage() {
         .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr 1fr;gap:72px;align-items:center;}
         .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;background:var(--white);border:1px solid var(--line);border-radius:999px;font-size:13px;font-weight:500;color:var(--brown-2);box-shadow:var(--shadow-sm);}
         .eyebrow-dot{width:18px;height:18px;border-radius:50%;background:var(--amber);display:grid;place-items:center;font-size:10px;}
-        .hero-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(44px,6vw,72px);line-height:1.02;letter-spacing:-0.025em;margin:20px 0 22px;color:var(--brown);text-wrap:balance;}
+        .hero-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(44px,6vw,72px);line-height:1.02;letter-spacing:-0.025em;margin:20px 0 22px;color:var(--brown);}
         .hero-title em{font-style:italic;font-weight:500;color:var(--amber-dark);}
         .hero-sub{font-size:18px;line-height:1.55;color:var(--brown-2);max-width:540px;margin:0 0 32px;}
         .hero-sub code{font-family:'JetBrains Mono',monospace;font-size:14px;background:var(--cream-2);padding:2px 7px;border-radius:6px;color:var(--brown);}
@@ -51,7 +41,7 @@ export default function LandingPage() {
         .hero-visual{position:relative;aspect-ratio:4/4.6;max-width:460px;justify-self:end;width:100%;}
         .stack-card{position:absolute;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden;}
         .stack-profile{top:0;left:0;right:60px;bottom:80px;padding:22px;display:flex;flex-direction:column;transform:rotate(-2deg);}
-        .profile-photo{width:100%;aspect-ratio:1.2;border-radius:14px;background:repeating-linear-gradient(135deg,var(--cream-3) 0 10px,var(--cream-2) 10px 20px);display:grid;place-items:center;color:var(--brown-3);font-family:'JetBrains Mono',monospace;font-size:11px;margin-bottom:14px;border:1px solid var(--line);}
+        .profile-photo{width:100%;aspect-ratio:1.2;border-radius:14px;background-image:url('https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80');background-size:cover;background-position:center;margin-bottom:14px;border:1px solid var(--line);}
         .profile-name{font-family:'Fraunces',serif;font-weight:700;font-size:26px;letter-spacing:-0.02em;line-height:1;margin:0 0 4px;}
         .profile-ens{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--amber-dark);margin-bottom:12px;}
         .profile-rows{display:grid;gap:4px;font-size:12.5px;color:var(--brown-2);}
@@ -73,16 +63,28 @@ export default function LandingPage() {
         .section-lede{color:var(--brown-2);font-size:17px;}
         .how{padding:96px 0;background:var(--cream);position:relative;}
         .how::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);}
-        .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;}
-        .step{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);padding:32px 28px 30px;position:relative;box-shadow:var(--shadow-sm);}
-        .step-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--brown-3);letter-spacing:0.08em;margin-bottom:20px;}
-        .step-icon{width:56px;height:56px;border-radius:16px;background:var(--cream-2);display:grid;place-items:center;margin-bottom:20px;color:var(--amber-dark);}
-        .step h3{font-family:'Fraunces',serif;font-size:22px;font-weight:600;letter-spacing:-0.01em;margin:0 0 8px;line-height:1.2;}
-        .step p{margin:0;color:var(--brown-2);font-size:15px;line-height:1.55;}
-        .step p code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--cream-2);padding:1px 6px;border-radius:5px;color:var(--brown);}
-        .step-arrow{position:absolute;right:-17px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:var(--amber);color:var(--white);display:grid;place-items:center;z-index:2;box-shadow:var(--shadow-sm);}
+        .flows{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+        .flow{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);padding:32px 32px 28px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+        .flow-wallet{background:var(--brown);color:var(--cream);border-color:transparent;}
+        .flow-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:22px;}
+        .flow-wallet .flow-head{border-color:rgba(255,253,248,.12);}
+        .flow-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--cream-2);color:var(--brown);font-size:13px;font-weight:600;}
+        .flow-wallet .flow-badge{background:var(--amber);color:var(--white);}
+        .flow-meta{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brown-3);}
+        .flow-wallet .flow-meta{color:rgba(251,245,236,.6);}
+        .flow-meta b{color:var(--brown);font-weight:600;}
+        .flow-wallet .flow-meta b{color:var(--amber-soft);}
+        .flow-steps{list-style:none;padding:0;margin:0;display:grid;gap:20px;}
+        .flow-steps li{display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start;}
+        .flow-num{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;color:var(--amber-dark);line-height:1;padding-top:2px;}
+        .flow-wallet .flow-num{color:var(--amber-soft);}
+        .flow-body h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:-0.01em;margin:0 0 4px;line-height:1.2;}
+        .flow-body p{margin:0;color:var(--brown-2);font-size:14.5px;line-height:1.55;}
+        .flow-wallet .flow-body p{color:rgba(251,245,236,.75);}
+        .flow-body p code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--cream-2);padding:1px 6px;border-radius:5px;color:var(--brown);}
+        .flow-wallet .flow-body p code{background:rgba(232,169,98,.18);color:var(--amber-soft);}
         .get{padding:96px 0;background:var(--cream-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-        .features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
         .feature{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 28px;display:flex;flex-direction:column;min-height:260px;}
         .feature-icon{width:44px;height:44px;border-radius:12px;background:var(--cream);border:1px solid var(--line);display:grid;place-items:center;color:var(--amber-dark);margin-bottom:18px;}
         .feature h4{font-family:'Fraunces',serif;font-size:19px;font-weight:600;letter-spacing:-0.01em;margin:0 0 8px;line-height:1.2;}
@@ -128,30 +130,10 @@ export default function LandingPage() {
         .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid var(--line);font-size:13px;color:var(--brown-3);}
         .foot-bottom-links{display:flex;gap:24px;}
         @media(max-width:960px){
-          .hero{padding:48px 0 60px;}
-          .hero-grid{grid-template-columns:1fr;gap:48px;}
-          .hero-visual{justify-self:center;max-width:380px;}
-          .nav-links{display:none;}
-          .features{grid-template-columns:repeat(2,1fr);}
-          .steps{grid-template-columns:1fr;}
-          .step-arrow{right:50%;top:auto;bottom:-17px;transform:translateX(50%) rotate(90deg);}
-          .domain-grid{grid-template-columns:1fr;}
-          .foot-grid{grid-template-columns:1fr 1fr;gap:32px;}
-          .how,.get,.domains,.pricing{padding:72px 0;}
+          .hero{padding:48px 0 60px;}.hero-grid{grid-template-columns:1fr;gap:48px;}.hero-visual{justify-self:center;max-width:380px;}.nav-links{display:none;}.features{grid-template-columns:repeat(2,1fr);}.flows{grid-template-columns:1fr;}.domain-grid{grid-template-columns:1fr;}.foot-grid{grid-template-columns:1fr 1fr;gap:32px;}.how,.get,.domains,.pricing{padding:72px 0;}
         }
         @media(max-width:540px){
-          .container{padding:0 20px;}
-          .features{grid-template-columns:1fr;}
-          .foot-grid{grid-template-columns:1fr;}
-          .foot-bottom{flex-direction:column;gap:14px;}
-          .cta-row{flex-direction:column;align-items:stretch;}
-          .btn{justify-content:center;}
-          .hero-meta{gap:14px;}
-          .price-card{padding:36px 26px;}
-          .price-divider{margin:0 -26px 24px;}
-          .price-amount{font-size:54px;}
-          .domain-card{padding:30px 24px;gap:20px;}
-          .domain-emoji{font-size:44px;}
+          .container{padding:0 20px;}.features{grid-template-columns:1fr;}.foot-grid{grid-template-columns:1fr;}.foot-bottom{flex-direction:column;gap:14px;}.cta-row{flex-direction:column;align-items:stretch;}.btn{justify-content:center;}.hero-meta{gap:14px;}.price-card{padding:36px 26px;}.price-divider{margin:0 -26px 24px;}.price-amount{font-size:54px;}.domain-card{padding:30px 24px;gap:20px;}.domain-emoji{font-size:44px;}
         }
       `}</style>
 
@@ -167,12 +149,10 @@ export default function LandingPage() {
 
       <header className="nav">
         <div className="container nav-inner">
-          <a href="#" className="logo">
-            <span className="logo-mark">
-              <svg width="20" height="20" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg>
-            </span>
+          <Link href="/" className="logo">
+            <span className="logo-mark"><svg width="20" height="20" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg></span>
             PetID
-          </a>
+          </Link>
           <nav className="nav-links" aria-label="Primary">
             <a href="#how">How it works</a>
             <a href="#features">What you get</a>
@@ -196,25 +176,19 @@ export default function LandingPage() {
         <div className="container hero-grid">
           <div>
             <span className="eyebrow">
-              <span className="eyebrow-dot">
-                <svg width="10" height="10" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg>
-              </span>
+              <span className="eyebrow-dot"><svg width="10" height="10" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg></span>
               Now minting on Ethereum
             </span>
-            <h1 className="hero-title">
-              Give your pet a <em>permanent</em> digital identity.
-            </h1>
+            <h1 className="hero-title">Give your pet a <em>permanent</em> digital identity.</h1>
             <p className="hero-sub">
               PetID mints a readable <code>name.dogid.eth</code> ENS subdomain for your dog or cat, pins a profile page to IPFS so it lives forever, and hands you a printable QR collar tag. One tap finds you if they wander.
             </p>
             <div className="cta-row">
               <Link href="/register" className="btn btn-primary">
-                Get started
-                <span className="btn-price">$19.99</span>
+                Get started <span className="btn-price">$19.99</span>
               </Link>
-              <Link href="/register" className="btn btn-outline">
-                Connect wallet
-                <span className="btn-price">0.005 ETH</span>
+              <Link href="/register?flow=crypto" className="btn btn-outline">
+                Connect wallet <span className="btn-price">0.005 ETH</span>
               </Link>
             </div>
             <div className="hero-meta">
@@ -223,10 +197,9 @@ export default function LandingPage() {
               <span><span className="check">✓</span> Instant download</span>
             </div>
           </div>
-
           <div className="hero-visual">
             <div className="stack-card stack-profile">
-              <div className="profile-photo">[ pet photo ]</div>
+              <div className="profile-photo" aria-label="Max, a golden retriever"></div>
               <div className="profile-name">Max</div>
               <div className="profile-ens">max.dogid.eth</div>
               <div className="profile-rows">
@@ -264,39 +237,37 @@ export default function LandingPage() {
         <div className="container">
           <div className="section-head">
             <div className="section-kicker">How it works</div>
-            <h2 className="section-title">Three steps, one <em>forever</em> identity.</h2>
-            <p className="section-lede">Under the hood it's ENS + IPFS + a printer — but you don't need to know that.</p>
+            <h2 className="section-title">Two ways to claim. One <em>forever</em> identity.</h2>
+            <p className="section-lede">Pay with a credit card and claim to a wallet whenever you're ready — or connect your wallet now and mint on-chain instantly.</p>
           </div>
-          <div className="steps">
-            <div className="step">
-              <div className="step-num">STEP 01</div>
-              <div className="step-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2.5"/></svg>
+          <div className="flows">
+            <div className="flow flow-card">
+              <div className="flow-head">
+                <div className="flow-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+                  Credit card
+                </div>
+                <div className="flow-meta"><b>$19.99</b> · no gas fees · claim later</div>
               </div>
-              <h3>Fill out the profile</h3>
-              <p>Name, breed, a good photo, emergency contact. Pick a subdomain — <code>max.dogid.eth</code>.</p>
-              <div className="step-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-              </div>
+              <ol className="flow-steps">
+                <li><div className="flow-num">01</div><div className="flow-body"><h4>Fill out the profile</h4><p>Name, breed, photo, emergency contact. Pick a subdomain — <code>max.dogid.eth</code>.</p></div></li>
+                <li><div className="flow-num">02</div><div className="flow-body"><h4>Pay $19.99 by card</h4><p>No wallet needed. We hold the ENS subdomain in custody and pin your profile to IPFS immediately.</p></div></li>
+                <li><div className="flow-num">03</div><div className="flow-body"><h4>Claim to a wallet anytime</h4><p>Download the QR tag now. Later, connect any wallet to transfer ownership — we cover the claim.</p></div></li>
+              </ol>
             </div>
-            <div className="step">
-              <div className="step-num">STEP 02</div>
-              <div className="step-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+            <div className="flow flow-wallet">
+              <div className="flow-head">
+                <div className="flow-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7V6a2 2 0 0 1 2-2h11"/><circle cx="16" cy="13" r="1.3" fill="currentColor"/></svg>
+                  Connect wallet
+                </div>
+                <div className="flow-meta"><b>0.005 ETH</b> + gas · instant transfer</div>
               </div>
-              <h3>Pay &amp; we mint</h3>
-              <p>$19.99 card or 0.005 ETH. We register the ENS subdomain and pin your profile to IPFS.</p>
-              <div className="step-arrow" aria-hidden="true">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-              </div>
-            </div>
-            <div className="step">
-              <div className="step-num">STEP 03</div>
-              <div className="step-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="17" r="1.5" fill="currentColor"/><path d="M9 7h6M9 10h6"/></svg>
-              </div>
-              <h3>Print the collar tag</h3>
-              <p>Download a high-res QR PDF and print it at home or any print shop. Anyone who scans it sees your pet's profile.</p>
+              <ol className="flow-steps">
+                <li><div className="flow-num">01</div><div className="flow-body"><h4>Fill out the profile</h4><p>Same form — name, breed, photo, contact. Subdomain availability check runs live.</p></div></li>
+                <li><div className="flow-num">02</div><div className="flow-body"><h4>Connect &amp; sign</h4><p>Pay 0.005 ETH plus Ethereum gas. One transaction mints the subdomain directly to your wallet.</p></div></li>
+                <li><div className="flow-num">03</div><div className="flow-body"><h4>Yours on-chain, instantly</h4><p>Download the QR tag PDF. The ENS record resolves to your IPFS profile from the moment you confirm.</p></div></li>
+              </ol>
             </div>
           </div>
         </div>
@@ -311,33 +282,19 @@ export default function LandingPage() {
           </div>
           <div className="features">
             <div className="feature">
-              <div className="feature-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
-              </div>
+              <div className="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></div>
               <h4>ENS subdomain</h4>
               <p>A readable, portable Ethereum name you own. Works in any wallet.</p>
               <div className="feature-code">max.dogid.eth</div>
             </div>
             <div className="feature">
-              <div className="feature-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-              </div>
+              <div className="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
               <h4>IPFS profile page</h4>
               <p>Photos, bio, vet &amp; emergency contacts — content-addressed, pinned, yours.</p>
-              <div className="feature-code">ipfs://Qm...a4f2</div>
+              <div className="feature-code">ipfs://bafy...a4f2</div>
             </div>
             <div className="feature">
-              <div className="feature-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 17h4M20 14v3M14 20h3"/></svg>
-              </div>
-              <h4>Printable QR tag</h4>
-              <p>Download a print-ready PDF with cut guides. Print at home or your local shop.</p>
-              <div className="feature-code">PDF · print-at-home</div>
-            </div>
-            <div className="feature">
-              <div className="feature-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s-7-7.58-7-12a7 7 0 1 1 14 0c0 4.42-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-              </div>
+              <div className="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s-7-7.58-7-12a7 7 0 1 1 14 0c0 4.42-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
               <h4>Found Pet button</h4>
               <p>Finder taps once — you get an SMS with their live GPS location.</p>
               <div className="feature-code">1-tap alert</div>
@@ -391,10 +348,7 @@ export default function LandingPage() {
           <div className="price-card">
             <span className="price-badge">MOST POPULAR · EVERYTHING</span>
             <div className="price-label">PetID — Complete</div>
-            <div className="price-row">
-              <span className="price-amount">$19.99</span>
-              <span className="price-unit">/ one-time</span>
-            </div>
+            <div className="price-row"><span className="price-amount">$19.99</span><span className="price-unit">/ one-time</span></div>
             <div className="price-sub">or pay with ETH · 0.005 ETH</div>
             <div className="price-divider"></div>
             <ul className="price-list">
@@ -416,12 +370,10 @@ export default function LandingPage() {
         <div className="container">
           <div className="foot-grid">
             <div className="foot-brand">
-              <a href="#" className="logo">
-                <span className="logo-mark">
-                  <svg width="20" height="20" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg>
-                </span>
+              <Link href="/" className="logo">
+                <span className="logo-mark"><svg width="20" height="20" aria-hidden="true"><use href="#paw" style={{color:"#FFFDF8"}}/></svg></span>
                 PetID
-              </a>
+              </Link>
               <p>A permanent digital identity for your pet. Built on ENS, stored on IPFS, printed by you.</p>
             </div>
             <div className="foot-col">
@@ -436,28 +388,24 @@ export default function LandingPage() {
             <div className="foot-col">
               <h5>Resources</h5>
               <ul>
-                <li><a href="#">Docs</a></li>
-                <li><a href="#">Lookup a tag</a></li>
-                <li><a href="#">Vets &amp; shelters</a></li>
                 <li><a href="#">FAQ</a></li>
+                <li><Link href="/privacy">Privacy Policy</Link></li>
+                <li><Link href="/terms">Terms of Service</Link></li>
               </ul>
             </div>
             <div className="foot-col">
-              <h5>Company</h5>
+              <h5>Connect</h5>
               <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Farcaster</a></li>
+                <li><a href="https://twitter.com/petidentity" target="_blank" rel="noopener noreferrer">Twitter @petidentity</a></li>
+                <li><a href="mailto:petid@onchain-id.id">petid@onchain-id.id</a></li>
               </ul>
             </div>
           </div>
           <div className="foot-bottom">
             <span>© 2026 PetID Labs · Made with 🐾 for good boys &amp; girls.</span>
             <div className="foot-bottom-links">
-              <a href="#">Privacy</a>
-              <a href="#">Terms</a>
-              <a href="#">Cookies</a>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
             </div>
           </div>
         </div>
