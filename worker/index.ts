@@ -54,15 +54,21 @@ async function notifySlack(message: string) {
 }
 
 function cidToContenthash(cidString: string): string {
-  // Decode base58-encoded CIDv0 (Qm...) into raw multihash bytes, then
-  // prepend the IPFS contenthash codec prefix (0xe3 0x01)
-  const BASE58_CHARS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-  let n = BigInt(0);
-  for (const char of cidString) {
-    n = n * BigInt(58) + BigInt(BASE58_CHARS.indexOf(char));
+  // Decode base32-encoded CIDv1 (bafy...) and prepend IPFS contenthash prefix (0xe301)
+  const BASE32_CHARS = "abcdefghijklmnopqrstuvwxyz234567";
+  const input = cidString.toLowerCase();
+  let bits = "";
+  for (const char of input) {
+    const val = BASE32_CHARS.indexOf(char);
+    if (val === -1) continue;
+    bits += val.toString(2).padStart(5, "0");
   }
-  let hex = n.toString(16);
-  if (hex.length % 2) hex = "0" + hex;
+  // trim to byte boundary
+  const byteCount = Math.floor(bits.length / 8);
+  let hex = "";
+  for (let i = 0; i < byteCount; i++) {
+    hex += parseInt(bits.slice(i * 8, i * 8 + 8), 2).toString(16).padStart(2, "0");
+  }
   return "0xe301" + hex;
 }
 
@@ -71,7 +77,7 @@ async function uploadHtml(html: string, subdomain: string): Promise<string> {
   (stream as any).path = `${subdomain}-petid.html`;
   const result = await pinata.pinFileToIPFS(stream, {
     pinataMetadata: { name: `${subdomain}-petid-page` },
-    pinataOptions: { cidVersion: 0 },
+    pinataOptions: { cidVersion: 1 },
   });
   return result.IpfsHash;
 }
@@ -81,7 +87,7 @@ async function uploadPhoto(buf: Buffer, filename: string): Promise<string> {
   (stream as any).path = filename;
   const result = await pinata.pinFileToIPFS(stream, {
     pinataMetadata: { name: `petid-photo-${filename}` },
-    pinataOptions: { cidVersion: 0 },
+    pinataOptions: { cidVersion: 1 },
   });
   return result.IpfsHash;
 }
