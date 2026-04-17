@@ -9,7 +9,7 @@ export function renderTemplate(templateId: string, pet: Record<string, any>): st
   return template({
     ...pet,
     photoUrl: pet.photoCid
-      ? `https://gateway.pinata.cloud/ipfs/${pet.photoCid}`
+      ? `${process.env.PINATA_GATEWAY_URL ?? "https://ipfs.onchain-id.id"}/ipfs/${pet.photoCid}`
       : `/assets/default-${pet.species}.jpg`,
     ensUrl: `https://${pet.subdomain}.${pet.parent_domain}.limo`,
     ownerName: pet.owner_name,

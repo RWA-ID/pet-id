@@ -70,7 +70,7 @@ export async function mintPetPage(petId: string) {
     await log(petId, "tx_confirmed", { txHash });
 
     // Mark live
-    const gatewayUrl = `https://gateway.pinata.cloud/ipfs/${pageCid}`;
+    const gatewayUrl = `${process.env.PINATA_GATEWAY_URL ?? "https://ipfs.onchain-id.id"}/ipfs/${pageCid}`;
     await supabase.from("pets").update({
       status: "live",
       ipfs_gateway_url: gatewayUrl,

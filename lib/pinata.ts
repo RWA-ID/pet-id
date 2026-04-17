@@ -34,7 +34,7 @@ export async function uploadPhotoToPinata(imageBuffer: Buffer, filename: string)
 }
 
 export const IPFS_GATEWAYS = {
-  primary: (cid: string) => `https://gateway.pinata.cloud/ipfs/${cid}`,
+  primary: (cid: string) => `${process.env.PINATA_GATEWAY_URL ?? "https://ipfs.onchain-id.id"}/ipfs/${cid}`,
   cloudflare: (cid: string) => `https://cloudflare-ipfs.com/ipfs/${cid}`,
   public: (cid: string) => `https://ipfs.io/ipfs/${cid}`,
   ensLimo: (subdomain: string, parent: string) => `https://${subdomain}.${parent}.limo`,
