@@ -22,6 +22,7 @@
     .cta { display:block; background:linear-gradient(90deg,#e890c0,#c890e0); color:#fff; text-align:center; padding:1rem; margin:1rem; border-radius:12px; text-decoration:none; font-weight:700; font-size:1rem; }
     .footer { text-align:center; padding:2rem 1rem; color:#ccc; font-size:0.75rem; }
     .footer a { color:#c890c0; text-decoration:none; }
+    .found-btn { display:block; background:#f59e0b; color:#fff; text-align:center; padding:1rem; margin:1rem; border-radius:8px; text-decoration:none; font-weight:700; font-size:1rem; }
   </style>
 </head>
 <body>
@@ -43,5 +44,6 @@
   {{#if emergencyNotes}}<div class="emergency">⚠️ {{emergencyNotes}}</div>{{/if}}
   <a class="cta" href="tel:{{ownerPhone}}">📞 Call Owner</a>
   <div class="footer"><p>{{subdomain}}.{{parent_domain}} · <a href="https://petid.eth.limo">PetID</a></p></div>
+  <a class="found-btn" href="https://petid-eth.pages.dev/found/{{subdomain}}">🐾 I Found {{name}}!</a>
 </body>
 </html>
