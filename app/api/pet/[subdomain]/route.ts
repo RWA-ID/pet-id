@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
@@ -8,12 +9,13 @@ const PUBLIC_FIELDS = [
   "ipfs_gateway_url", "status", "created_at",
 ];
 
-export async function GET(req: NextRequest, { params }: { params: { subdomain: string } }) {
-  const supabase = createClient();
+export async function GET(req: NextRequest, { params }: { params: Promise<{ subdomain: string }> }) {
+  const { subdomain } = await params;
+  const supabase = await createClient();
   const { data: pet } = await supabase
     .from("pets")
     .select(PUBLIC_FIELDS.join(", "))
-    .eq("subdomain", params.subdomain)
+    .eq("subdomain", subdomain)
     .eq("status", "live")
     .single();
 

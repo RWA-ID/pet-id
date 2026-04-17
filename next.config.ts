@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["@pinata/sdk", "handlebars"],
-  },
+  serverExternalPackages: ["@pinata/sdk", "handlebars"],
 };
 
 export default nextConfig;

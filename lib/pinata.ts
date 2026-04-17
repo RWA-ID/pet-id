@@ -15,7 +15,6 @@ export async function uploadHtmlToPinata(html: string, subdomain: string): Promi
   const result = await pinata.pinFileToIPFS(stream, {
     pinataMetadata: {
       name: `${subdomain}-petid-page`,
-      keyvalues: { subdomain, type: "pet-page" },
     },
     pinataOptions: { cidVersion: 0 },
   });

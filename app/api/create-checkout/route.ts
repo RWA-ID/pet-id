@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
@@ -8,7 +9,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { subdomain, parentDomain, ownerEmail, petName, species, templateId } = body;
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Re-check availability before charging
   const { data: existing } = await supabase

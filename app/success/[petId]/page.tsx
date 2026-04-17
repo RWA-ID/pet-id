@@ -1,12 +1,14 @@
+export const runtime = 'edge';
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
-export default async function SuccessPage({ params }: { params: { petId: string } }) {
-  const supabase = createClient();
+export default async function SuccessPage({ params }: { params: Promise<{ petId: string }> }) {
+  const { petId } = await params;
+  const supabase = await createClient();
   const { data: pet } = await supabase
     .from("pets")
     .select("id, name, subdomain, parent_domain, status, page_cid")
-    .eq("id", params.petId)
+    .eq("id", petId)
     .single();
 
   if (!pet) {
