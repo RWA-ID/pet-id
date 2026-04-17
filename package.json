@@ -15,9 +15,10 @@
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "@tanstack/react-query": "^5.99.0",
+    "dotenv": "^17.4.2",
     "handlebars": "^4.7.9",
     "multiformats": "^13.4.2",
-    "next": "^15.5.15",
+    "next": "^15.5.2",
     "qrcode": "^1.5.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -36,5 +37,6 @@
     "@types/react-dom": "^19",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "type": "module"
 }

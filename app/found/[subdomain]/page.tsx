@@ -68,7 +68,7 @@ export default async function FoundPetPage({ params }: { params: Promise<{ subdo
         </div>
 
         <div className="px-6 pb-6 text-center">
-          <a href={`https://${pet.subdomain}.${pet.parent_domain}.limo`}
+          <a href={`https://${pet.subdomain}.${pet.parent_domain}.link`}
             className="text-sm text-amber-700 hover:underline">
             View {pet.name}&apos;s full profile →
           </a>

@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function sendConfirmationEmail(pet: Pet, pageCid: string) {
   const qrBuffer = await generateQRCode(pet.subdomain, pet.parentDomain);
-  const ensUrl = `https://${pet.subdomain}.${pet.parentDomain}.limo`;
+  const ensUrl = `https://${pet.subdomain}.${pet.parentDomain}.link`;
   const ipfsUrl = `${process.env.PINATA_GATEWAY_URL ?? "https://ipfs.onchain-id.id"}/ipfs/${pageCid}`;
 
   await resend.emails.send({

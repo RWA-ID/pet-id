@@ -15,7 +15,7 @@ export default async function SuccessPage({ params }: { params: Promise<{ petId:
     return <div className="p-8 text-center text-gray-500">Pet not found.</div>;
   }
 
-  const ensUrl = `https://${pet.subdomain}.${pet.parent_domain}.limo`;
+  const ensUrl = `https://${pet.subdomain}.${pet.parent_domain}.link`;
 
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4">

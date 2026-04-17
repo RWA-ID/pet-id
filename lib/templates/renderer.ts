@@ -11,7 +11,7 @@ export function renderTemplate(templateId: string, pet: Record<string, any>): st
     photoUrl: pet.photoCid
       ? `${process.env.PINATA_GATEWAY_URL ?? "https://ipfs.onchain-id.id"}/ipfs/${pet.photoCid}`
       : `/assets/default-${pet.species}.jpg`,
-    ensUrl: `https://${pet.subdomain}.${pet.parent_domain}.limo`,
+    ensUrl: `https://${pet.subdomain}.${pet.parent_domain}.link`,
     ownerName: pet.owner_name,
     ownerPhone: pet.owner_phone,
     emergencyNotes: pet.emergency_notes,

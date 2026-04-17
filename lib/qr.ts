@@ -4,7 +4,7 @@ export async function generateQRCode(
   subdomain: string,
   parentDomain: string
 ): Promise<Buffer> {
-  const url = `https://${subdomain}.${parentDomain}.limo`;
+  const url = `https://${subdomain}.${parentDomain}.link`;
   return QRCode.toBuffer(url, {
     type: "png",
     width: 512,

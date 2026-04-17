@@ -96,7 +96,7 @@ function renderTemplate(templateId: string, pet: Record<string, any>): string {
     photoUrl: pet.photoCid
       ? `${PINATA_GATEWAY}/ipfs/${pet.photoCid}`
       : `/assets/default-${pet.species}.jpg`,
-    ensUrl: `https://${pet.subdomain}.${pet.parent_domain}.limo`,
+    ensUrl: `https://${pet.subdomain}.${pet.parent_domain}.link`,
     ownerName:       pet.owner_name,
     ownerPhone:      pet.owner_phone,
     emergencyNotes:  pet.emergency_notes,
@@ -125,7 +125,7 @@ async function adminRegisterOnChain(
 }
 
 async function generateQRCode(subdomain: string, parentDomain: string): Promise<Buffer> {
-  const url = `https://${subdomain}.${parentDomain}.limo`;
+  const url = `https://${subdomain}.${parentDomain}.link`;
   return QRCode.toBuffer(url, {
     type: "png",
     width: 512,
@@ -180,7 +180,7 @@ async function mintPet(pet: any) {
 
   // 5. Send email with QR
   const qrBuffer = await generateQRCode(pet.subdomain, pet.parent_domain);
-  const ensUrl   = `https://${pet.subdomain}.${pet.parent_domain}.limo`;
+  const ensUrl   = `https://${pet.subdomain}.${pet.parent_domain}.link`;
   await resend.emails.send({
     from: FROM_EMAIL,
     to: pet.owner_email,
