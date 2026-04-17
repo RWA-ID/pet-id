@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{name}} — {{subdomain}}.{{parent_domain}}</title>
+  <meta property="og:image" content="{{photoUrl}}">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Helvetica Neue',Arial,sans-serif; background:#f8f8f8; color:#111; min-height:100vh; }
+    .hero { background:#111; padding:3rem 2rem; display:flex; flex-direction:column; align-items:center; }
+    .pet-photo { width:140px; height:140px; border-radius:8px; object-fit:cover; margin-bottom:1.5rem; }
+    .pet-name { font-size:2.5rem; font-weight:900; color:#fff; letter-spacing:-0.03em; }
+    .pet-subtitle { color:#888; font-size:0.9rem; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.15em; }
+    .section { padding:1.5rem; border-bottom:1px solid #e5e5e5; background:#fff; }
+    .section:last-of-type { border-bottom:none; }
+    .label { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:#aaa; }
+    .value { font-size:1rem; font-weight:700; margin-top:0.2rem; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+    .bio { font-size:0.95rem; line-height:1.7; color:#444; }
+    .emergency { background:#fff3cd; padding:1.25rem; margin:0.5rem 1rem; border-radius:6px; border-left:4px solid #ffc107; }
+    .cta { display:block; background:#111; color:#fff; text-align:center; padding:1.25rem; margin:1rem; border-radius:6px; text-decoration:none; font-weight:700; letter-spacing:0.05em; font-size:1rem; }
+    .footer { text-align:center; padding:2rem 1rem; color:#ccc; font-size:0.75rem; background:#f8f8f8; }
+    .footer a { color:#111; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <img class="pet-photo" src="{{photoUrl}}" alt="{{name}}" />
+    <h1 class="pet-name">{{name}}</h1>
+    <p class="pet-subtitle">{{breed}} &nbsp;·&nbsp; {{age_years}}y &nbsp;·&nbsp; {{sex}}</p>
+  </div>
+  <div class="section">
+    <div class="grid">
+      <div><div class="label">Owner</div><div class="value">{{ownerName}}</div></div>
+      <div><div class="label">Color</div><div class="value">{{color}}</div></div>
+      <div><div class="label">Species</div><div class="value">Dog 🐕</div></div>
+      <div><div class="label">Age</div><div class="value">{{age_years}} yrs</div></div>
+    </div>
+  </div>
+  {{#if bio}}<div class="section"><div class="label">About</div><p class="bio" style="margin-top:0.5rem">{{bio}}</p></div>{{/if}}
+  {{#if emergencyNotes}}<div class="emergency"><strong>⚠️ Notes:</strong> {{emergencyNotes}}</div>{{/if}}
+  <a class="cta" href="tel:{{ownerPhone}}">📞 {{ownerPhone}}</a>
+  <div class="footer"><p>{{subdomain}}.{{parent_domain}} · <a href="https://petid.eth.limo">PetID</a></p></div>
+</body>
+</html>

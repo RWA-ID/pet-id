@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "dependencies": {
     "@pinata/sdk": "^2.1.0",
@@ -21,10 +23,12 @@
     "react-dom": "19.2.4",
     "resend": "^6.12.0",
     "uint8arrays": "^5.1.1",
+    "use-debounce": "^10.1.1",
     "viem": "^2.48.1",
-    "wagmi": "^3.6.2"
+    "wagmi": "^2.19.5"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

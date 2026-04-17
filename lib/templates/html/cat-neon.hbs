@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{name}} — {{subdomain}}.{{parent_domain}}</title>
+  <meta property="og:image" content="{{photoUrl}}">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Courier New',monospace; background:#0a0a0a; color:#e0e0e0; min-height:100vh; }
+    .hero { text-align:center; padding:3rem 1rem; border-bottom:1px solid #00ff9940; }
+    .pet-photo { width:150px; height:150px; border-radius:50%; object-fit:cover; border:3px solid #00ff99; box-shadow:0 0 30px #00ff9960; margin:0 auto 1.5rem; display:block; }
+    .pet-name { font-size:2.2rem; font-weight:700; color:#00ff99; text-shadow:0 0 20px #00ff9980; }
+    .pet-subtitle { color:#666; font-size:0.85rem; margin-top:0.5rem; text-transform:uppercase; letter-spacing:0.2em; }
+    .card { margin:1rem; padding:1.25rem; border:1px solid #1a1a1a; border-radius:8px; background:#111; }
+    .card-title { font-size:0.7rem; text-transform:uppercase; letter-spacing:0.2em; color:#00ff99; margin-bottom:1rem; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .item-label { font-size:0.65rem; color:#555; text-transform:uppercase; }
+    .item-value { font-size:0.95rem; color:#e0e0e0; margin-top:0.1rem; }
+    .bio { font-size:0.9rem; line-height:1.7; color:#aaa; }
+    .emergency { margin:1rem; padding:1rem; background:#1a0a00; border:1px solid #ff6600; border-radius:8px; color:#ff9940; font-size:0.9rem; }
+    .cta { display:block; margin:1rem; padding:1rem; text-align:center; background:#00ff99; color:#000; font-weight:700; border-radius:8px; text-decoration:none; font-size:1rem; letter-spacing:0.05em; }
+    .footer { text-align:center; padding:2rem 1rem; color:#333; font-size:0.7rem; }
+    .footer a { color:#00ff99; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <img class="pet-photo" src="{{photoUrl}}" alt="{{name}}" />
+    <h1 class="pet-name">{{name}}</h1>
+    <p class="pet-subtitle">{{breed}} / {{age_years}}y / {{sex}}</p>
+  </div>
+  <div class="card">
+    <div class="card-title">// profile</div>
+    <div class="grid">
+      <div><div class="item-label">species</div><div class="item-value">Cat 🐈</div></div>
+      <div><div class="item-label">color</div><div class="item-value">{{color}}</div></div>
+      <div><div class="item-label">owner</div><div class="item-value">{{ownerName}}</div></div>
+      <div><div class="item-label">age</div><div class="item-value">{{age_years}} yrs</div></div>
+    </div>
+  </div>
+  {{#if bio}}<div class="card"><div class="card-title">// bio</div><p class="bio">{{bio}}</p></div>{{/if}}
+  {{#if emergencyNotes}}<div class="emergency">⚠️ {{emergencyNotes}}</div>{{/if}}
+  <a class="cta" href="tel:{{ownerPhone}}">📞 {{ownerPhone}}</a>
+  <div class="footer"><p>{{subdomain}}.{{parent_domain}} · <a href="https://petid.eth.limo">petid.eth</a></p></div>
+</body>
+</html>

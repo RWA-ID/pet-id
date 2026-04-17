@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{name}} — {{subdomain}}.{{parent_domain}}</title>
+  <meta name="description" content="{{name}} is a {{breed}} owned by {{ownerName}}. Scan to learn more.">
+  <meta property="og:image" content="{{photoUrl}}">
+  <style>
+    :root { --cream:#FAF3E0; --bark:#6B4226; --moss:#4A7C59; --sand:#D4A76A; --text:#2C1810; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Georgia',serif; background:var(--cream); color:var(--text); min-height:100vh; }
+    .hero { background:linear-gradient(135deg,var(--bark) 0%,#8B5E3C 100%); padding:2rem; text-align:center; }
+    .pet-photo { width:160px; height:160px; border-radius:50%; border:5px solid var(--sand); object-fit:cover; margin:0 auto 1rem; display:block; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+    .pet-name { font-size:2.5rem; font-weight:700; color:var(--cream); }
+    .pet-subtitle { color:var(--sand); font-style:italic; margin-top:0.25rem; }
+    .card { background:white; border-radius:12px; padding:1.5rem; margin:1rem; box-shadow:0 2px 8px rgba(0,0,0,0.08); border-left:4px solid var(--moss); }
+    .card h2 { color:var(--bark); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.75rem; }
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+    .info-item label { font-size:0.75rem; color:#888; text-transform:uppercase; letter-spacing:0.05em; display:block; }
+    .info-item span { font-size:1rem; font-weight:600; }
+    .bio { line-height:1.6; color:#444; font-size:0.95rem; }
+    .emergency { background:#FFF3CD; border:2px solid #FFC107; border-radius:8px; padding:1rem 1.5rem; margin:1rem; }
+    .emergency h2 { color:#856404; font-size:0.9rem; font-weight:700; margin-bottom:0.5rem; }
+    .contact-btn { display:block; background:var(--bark); color:white; text-align:center; padding:1rem; margin:1rem; border-radius:8px; text-decoration:none; font-weight:700; font-size:1.1rem; }
+    .footer { text-align:center; padding:2rem 1rem; color:#888; font-size:0.75rem; }
+    .footer a { color:var(--bark); text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <img class="pet-photo" src="{{photoUrl}}" alt="Photo of {{name}}" />
+    <h1 class="pet-name">{{name}}</h1>
+    <p class="pet-subtitle">{{breed}} · {{age_years}} yr old {{sex}}</p>
+  </div>
+  <div class="card">
+    <h2>About {{name}}</h2>
+    <div class="info-grid">
+      <div class="info-item"><label>Species</label><span>🐕 Dog</span></div>
+      <div class="info-item"><label>Color</label><span>{{color}}</span></div>
+      <div class="info-item"><label>Owner</label><span>{{ownerName}}</span></div>
+      <div class="info-item"><label>Age</label><span>{{age_years}} years</span></div>
+    </div>
+  </div>
+  {{#if bio}}<div class="card"><h2>Bio</h2><p class="bio">{{bio}}</p></div>{{/if}}
+  {{#if emergencyNotes}}<div class="emergency"><h2>⚠️ Important Notes</h2><p>{{emergencyNotes}}</p></div>{{/if}}
+  <a class="contact-btn" href="tel:{{ownerPhone}}">📞 Call Owner — {{ownerPhone}}</a>
+  <div class="footer">
+    <p>{{name}}'s permanent profile · <a href="https://petid.eth.limo">Powered by PetID</a></p>
+    <p>{{subdomain}}.{{parent_domain}} · Hosted forever on IPFS</p>
+  </div>
+</body>
+</html>
