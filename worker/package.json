@@ -12,11 +12,12 @@
     "@pinata/sdk": "^2.1.0",
     "@supabase/supabase-js": "^2.103.3",
     "handlebars": "^4.7.9",
-    "multiformats": "^13.4.2",
-    "resend": "^6.12.0",
     "qrcode": "^1.5.4",
-    "uint8arrays": "^5.1.1",
+    "resend": "^6.12.0",
     "viem": "^2.48.1"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "devDependencies": {
     "@types/node": "^20",

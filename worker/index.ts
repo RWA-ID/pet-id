@@ -5,7 +5,6 @@ import Handlebars from "handlebars";
 import PinataClient from "@pinata/sdk";
 import { Resend } from "resend";
 import { Readable } from "stream";
-import { CID } from "multiformats/cid";
 import { createWalletClient, createPublicClient, http, parseAbi } from "viem";
 import { mainnet } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
@@ -55,10 +54,16 @@ async function notifySlack(message: string) {
 }
 
 function cidToContenthash(cidString: string): string {
-  const cid = CID.parse(cidString);
-  const cidV1 = cid.toV1();
-  const bytes = new Uint8Array([0xe3, 0x01, ...cidV1.bytes]);
-  return "0x" + Buffer.from(bytes).toString("hex");
+  // Decode base58-encoded CIDv0 (Qm...) into raw multihash bytes, then
+  // prepend the IPFS contenthash codec prefix (0xe3 0x01)
+  const BASE58_CHARS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+  let n = BigInt(0);
+  for (const char of cidString) {
+    n = n * BigInt(58) + BigInt(BASE58_CHARS.indexOf(char));
+  }
+  let hex = n.toString(16);
+  if (hex.length % 2) hex = "0" + hex;
+  return "0xe301" + hex;
 }
 
 async function uploadHtml(html: string, subdomain: string): Promise<string> {
