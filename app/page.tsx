@@ -185,10 +185,10 @@ export default function LandingPage() {
             </p>
             <div className="cta-row">
               <Link href="/register" className="btn btn-primary">
-                Get started <span className="btn-price">$19.99</span>
+                Pay with Credit Card <span className="btn-price">$19.99</span>
               </Link>
               <Link href="/register?flow=crypto" className="btn btn-outline">
-                Connect wallet <span className="btn-price">0.005 ETH</span>
+                Pay with Crypto <span className="btn-price">0.00825 ETH</span>
               </Link>
             </div>
             <div className="hero-meta">
@@ -261,11 +261,11 @@ export default function LandingPage() {
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M3 7V6a2 2 0 0 1 2-2h11"/><circle cx="16" cy="13" r="1.3" fill="currentColor"/></svg>
                   Connect wallet
                 </div>
-                <div className="flow-meta"><b>0.005 ETH</b> + gas · instant transfer</div>
+                <div className="flow-meta"><b>0.00825 ETH</b> + gas · instant transfer</div>
               </div>
               <ol className="flow-steps">
                 <li><div className="flow-num">01</div><div className="flow-body"><h4>Fill out the profile</h4><p>Same form — name, breed, photo, contact. Subdomain availability check runs live.</p></div></li>
-                <li><div className="flow-num">02</div><div className="flow-body"><h4>Connect &amp; sign</h4><p>Pay 0.005 ETH plus Ethereum gas. One transaction mints the subdomain directly to your wallet.</p></div></li>
+                <li><div className="flow-num">02</div><div className="flow-body"><h4>Connect &amp; sign</h4><p>Pay 0.00825 ETH plus Ethereum gas. One transaction mints the subdomain directly to your wallet.</p></div></li>
                 <li><div className="flow-num">03</div><div className="flow-body"><h4>Yours on-chain, instantly</h4><p>Download the QR tag PDF. The ENS record resolves to your IPFS profile from the moment you confirm.</p></div></li>
               </ol>
             </div>
@@ -349,7 +349,7 @@ export default function LandingPage() {
             <span className="price-badge">MOST POPULAR · EVERYTHING</span>
             <div className="price-label">PetID — Complete</div>
             <div className="price-row"><span className="price-amount">$19.99</span><span className="price-unit">/ one-time</span></div>
-            <div className="price-sub">or pay with ETH · 0.005 ETH</div>
+            <div className="price-sub">or pay with ETH · 0.00825 ETH</div>
             <div className="price-divider"></div>
             <ul className="price-list">
               <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 7"/></svg><span><b>ENS subdomain</b> on dogid.eth or catid.eth</span></li>

@@ -25,7 +25,7 @@ export default function TermsPage() {
         <h2 style={{ fontSize: 22, fontWeight: 600, marginBottom: 12 }}>3. Payments and Refunds</h2>
         <ul style={{ paddingLeft: 24 }}>
           <li>Fiat registrations cost $19.99 USD, processed by Helio.</li>
-          <li>Crypto registrations cost 0.005 ETH plus gas fees, paid directly on-chain.</li>
+          <li>Crypto registrations cost 0.00825 ETH plus gas fees, paid directly on-chain.</li>
           <li>All sales are final. Due to the irreversible nature of blockchain transactions, refunds are not available once an ENS subdomain has been registered.</li>
           <li>If registration fails after payment, we will re-attempt or issue a refund at our discretion.</li>
         </ul>

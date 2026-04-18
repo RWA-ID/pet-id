@@ -78,7 +78,7 @@ export default function ReviewPage() {
           <div className="flex justify-between"><span>Template</span><span className="font-medium">{templateId}</span></div>
           <div className="border-t pt-2 mt-2 flex justify-between font-bold text-gray-800">
             <span>Total</span>
-            <span>{payMethod === "fiat" ? "$19.99" : "0.005 ETH"}</span>
+            <span>{payMethod === "fiat" ? "$19.99" : "0.00825 ETH"}</span>
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export default function ReviewPage() {
             onClick={() => setPayMethod("crypto")}
             className={`flex-1 py-3 text-sm font-semibold transition ${payMethod === "crypto" ? "bg-amber-700 text-white" : "bg-white text-gray-500 hover:bg-gray-50"}`}
           >
-            🦊 Wallet (0.005 ETH)
+            🦊 Wallet (0.00825 ETH)
           </button>
         </div>
 
@@ -129,7 +129,7 @@ export default function ReviewPage() {
                 disabled={isCryptoLoading}
                 className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition disabled:opacity-40 text-lg"
               >
-                {isPending ? "Confirm in wallet…" : isConfirming ? "Confirming tx…" : "Pay 0.005 ETH →"}
+                {isPending ? "Confirm in wallet…" : isConfirming ? "Confirming tx…" : "Pay 0.00825 ETH →"}
               </button>
             )}
             {error && (

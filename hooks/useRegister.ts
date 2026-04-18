@@ -48,7 +48,7 @@ export function useRegister(parentDomain: "dogid.eth" | "catid.eth") {
       abi: REGISTRAR_ABI,
       functionName: "register",
       args: [parentNode, label, contenthash],
-      value: parseEther("0.005"),
+      value: parseEther("0.00825"),
     });
   };
 
