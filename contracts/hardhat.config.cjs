@@ -10,6 +10,9 @@ module.exports = {
     settings: { optimizer: { enabled: true, runs: 200 } },
   },
   networks: {
+    hardhat: process.env.FORK
+      ? { forking: { url: process.env.RPC_URL ?? "" } }
+      : {},
     mainnet: {
       url: process.env.RPC_URL ?? "",
       accounts: process.env.ADMIN_WALLET_PRIVATE_KEY ? [process.env.ADMIN_WALLET_PRIVATE_KEY] : [],
