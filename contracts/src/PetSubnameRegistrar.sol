@@ -3,6 +3,7 @@ pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 interface INameWrapper {
     function setSubnodeRecord(
@@ -17,6 +18,7 @@ interface INameWrapper {
 
     function ownerOf(uint256 id) external view returns (address);
     function isApprovedForAll(address owner, address operator) external view returns (bool);
+    function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) external;
 }
 
 interface IENSRegistry {
@@ -29,9 +31,9 @@ interface IPublicResolver {
 }
 
 uint32 constant CANNOT_UNWRAP         = 1;
-uint32 constant PARENT_CANNOT_CONTROL = 1 << 17;
+uint32 constant PARENT_CANNOT_CONTROL = 1 << 16;
 
-contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
+contract PetSubnameRegistrar is Ownable, ReentrancyGuard, ERC1155Holder {
 
     // ── Immutables ────────────────────────────────────────────────
     INameWrapper    public immutable nameWrapper;
@@ -39,7 +41,7 @@ contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
     IPublicResolver public immutable resolver;
 
     // ── State ─────────────────────────────────────────────────────
-    uint256 public registrationFee = 0.005 ether;
+    uint256 public registrationFee = 0.00825 ether;
 
     // Supported parent nodes (dogid.eth, catid.eth, petid.eth, etc.)
     mapping(bytes32 => bool) public supportedParents;
@@ -213,19 +215,23 @@ contract PetSubnameRegistrar is Ownable, ReentrancyGuard {
             require(existing == address(0), "Already registered");
         } catch {}
 
-        address parentOwner = ensRegistry.owner(parentNode);
+        address parentOwner = nameWrapper.ownerOf(uint256(parentNode));
         require(
             nameWrapper.isApprovedForAll(parentOwner, address(this)),
             "Registrar not approved on NameWrapper"
         );
 
+        // Mint to this contract first so we can set the contenthash before transferring ownership
         subnameNode = nameWrapper.setSubnodeRecord(
-            parentNode, label, owner, address(resolver), 0, fuses, expiry
+            parentNode, label, address(this), address(resolver), 0, fuses, expiry
         );
 
         if (contenthash.length > 0) {
             resolver.setContenthash(subnameNode, contenthash);
         }
+
+        // Transfer to the actual owner
+        nameWrapper.safeTransferFrom(address(this), owner, uint256(subnameNode), 1, "");
     }
 
     function _makeNode(bytes32 parentNode, string calldata label) internal pure returns (bytes32) {
